@@ -1,0 +1,40 @@
+# Operating-system files
+.DS_Store
+Thumbs.db
+
+# Editors and local tooling
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Dependencies and generated output
+node_modules/
+dist/
+build/
+coverage/
+.cache/
+.parcel-cache/
+.turbo/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+
+# Environment and local configuration
+.env
+.env.*
+!.env.example
+local.properties
+secure.properties
+auth.json
+
+# Credentials and signing material
+*.key
+*.pem
+*.p12
+*.pfx
+*.jks
+*.keystore

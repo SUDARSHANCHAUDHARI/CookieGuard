@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; base-uri 'none'; connect-src 'none'; font-src 'self'; form-action 'none'; frame-src 'none'; img-src 'self' data:; media-src 'none'; object-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; worker-src 'none'"
+    >
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#274c77">
+    <meta name="referrer" content="no-referrer">
+    <meta name="description" content="Try to outsmart a cartoon cookie jar protecting its final cookie.">
+    <title>CookieGuard — The final cookie is under protection</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#game">Skip to the cookie jar</a>
+
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="CookieGuard home">
+        <svg class="brand__mark" viewBox="0 0 40 40" aria-hidden="true">
+          <path d="M9 14h22l-1.4 19H10.4z" fill="#a7d8c8" stroke="currentColor" stroke-width="2"/>
+          <path d="M7 9h26v7H7z" fill="#e84855" stroke="currentColor" stroke-width="2"/>
+          <circle cx="20" cy="24" r="5.5" fill="#d9943d"/>
+          <circle cx="18" cy="22" r="1" fill="#5a3525"/>
+          <circle cx="22.5" cy="25" r="1" fill="#5a3525"/>
+        </svg>
+        <span>CookieGuard</span>
+      </a>
+      <p class="shift-badge"><span aria-hidden="true"></span> Pantry patrol: active</p>
+    </header>
+
+    <main id="game">
+      <section class="intro" aria-labelledby="page-title">
+        <p class="eyebrow">Case file CG–01 · One snack remaining</p>
+        <h1 id="page-title">This jar has one job:<br><em>protect the final cookie.</em></h1>
+        <p class="intro__copy">Try to take it. Click, tap, drag, or use <kbd>Enter</kbd>. The jar has prepared countermeasures.</p>
+      </section>
+
+      <section class="game-shell" aria-labelledby="game-heading">
+        <h2 id="game-heading" class="visually-hidden">Interactive CookieGuard game</h2>
+
+        <div class="game-toolbar">
+          <div class="attempt-readout" aria-live="off">
+            <span class="attempt-readout__label">Grab attempts</span>
+            <strong><span id="attemptCount">00</span><span aria-hidden="true"> / 15</span></strong>
+          </div>
+
+          <div class="mission-progress">
+            <div class="mission-progress__labels" aria-hidden="true">
+              <span>Guarded</span>
+              <span>½ at 10</span>
+              <span>Free at 15</span>
+            </div>
+            <div
+              id="attemptProgress"
+              class="progress-track"
+              role="progressbar"
+              aria-label="Attempts toward freeing the cookie"
+              aria-valuemin="0"
+              aria-valuemax="15"
+              aria-valuenow="0"
+              aria-valuetext="0 of 15 attempts"
+            >
+              <span class="progress-track__fill"></span>
+              <span class="progress-track__half" aria-hidden="true"></span>
+            </div>
+          </div>
+
+          <div class="controls" aria-label="Game controls">
+            <button id="soundToggle" class="control-button" type="button" aria-pressed="true" aria-label="Mute sound">
+              <svg class="icon-sound-on" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 9v6h4l5 4V5L9 9H5zm12.5-.5a5 5 0 0 1 0 7M19.8 6a8.5 8.5 0 0 1 0 12"/>
+              </svg>
+              <svg class="icon-sound-off" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 9v6h4l5 4V5L9 9H5zm12 1 5 5m0-5-5 5"/>
+              </svg>
+              <span>Sound</span>
+            </button>
+            <button id="resetButton" class="control-button" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20 11a8 8 0 1 0-2.3 5.7M20 5v6h-6"/>
+              </svg>
+              <span>Reset</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="kitchenScene" class="kitchen-scene" aria-describedby="gameInstructions">
+          <div class="kitchen-wall" aria-hidden="true">
+            <div class="wall-tile wall-tile--one"></div>
+            <div class="wall-tile wall-tile--two"></div>
+            <div class="window">
+              <span class="window__sun"></span>
+              <span class="window__hill window__hill--one"></span>
+              <span class="window__hill window__hill--two"></span>
+              <span class="window__bar window__bar--h"></span>
+              <span class="window__bar window__bar--v"></span>
+            </div>
+            <div class="shelf">
+              <div class="mug"><span></span></div>
+              <div class="plant-pot"><i></i><i></i><i></i></div>
+              <div class="tin">FLOUR</div>
+            </div>
+            <svg class="hanging-spoon" viewBox="0 0 50 150">
+              <path d="M25 4v88"/>
+              <ellipse cx="25" cy="117" rx="17" ry="27"/>
+              <circle cx="25" cy="9" r="4"/>
+            </svg>
+          </div>
+
+          <div id="defenseBanner" class="defense-banner">
+            <span class="defense-banner__signal" aria-hidden="true"></span>
+            <span id="defenseText">Final cookie secured. For now.</span>
+          </div>
+
+          <div class="table-edge" aria-hidden="true"></div>
+          <div class="tablecloth" aria-hidden="true"></div>
+
+          <div id="jarActor" class="jar-actor">
+            <div id="cartoonHand" class="cartoon-hand" aria-hidden="true">
+              <span class="cartoon-hand__finger cartoon-hand__finger--one"></span>
+              <span class="cartoon-hand__finger cartoon-hand__finger--two"></span>
+              <span class="cartoon-hand__finger cartoon-hand__finger--three"></span>
+              <span class="cartoon-hand__palm"></span>
+              <span class="cartoon-hand__cuff"></span>
+            </div>
+
+            <div class="jar-arm jar-arm--left" aria-hidden="true"><span></span></div>
+            <div class="jar-arm jar-arm--right" aria-hidden="true"><span></span></div>
+
+            <div id="jarLid" class="jar-lid" aria-hidden="true">
+              <span class="jar-lid__knob"></span>
+              <span class="jar-lid__top"></span>
+              <span class="jar-lid__rim"></span>
+            </div>
+
+            <div class="jar-mouth" aria-hidden="true"></div>
+
+            <button
+              id="cookie"
+              class="cookie"
+              type="button"
+              aria-label="Try to take the final cookie"
+              aria-describedby="gameInstructions"
+              aria-keyshortcuts="Enter Space"
+            >
+              <span class="cookie__bite" aria-hidden="true"></span>
+              <span class="chip chip--one" aria-hidden="true"></span>
+              <span class="chip chip--two" aria-hidden="true"></span>
+              <span class="chip chip--three" aria-hidden="true"></span>
+              <span class="chip chip--four" aria-hidden="true"></span>
+              <span class="chip chip--five" aria-hidden="true"></span>
+              <span class="visually-hidden">Final cookie</span>
+            </button>
+
+            <div id="broccoli" class="broccoli" aria-hidden="true">
+              <span class="broccoli__head broccoli__head--one"></span>
+              <span class="broccoli__head broccoli__head--two"></span>
+              <span class="broccoli__head broccoli__head--three"></span>
+              <span class="broccoli__stem"></span>
+            </div>
+
+            <div id="fakeCookies" class="fake-cookies" aria-hidden="true"></div>
+
+            <div class="jar-body" aria-hidden="true">
+              <svg viewBox="0 0 310 330" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="jarGlass" x1="0" x2="1">
+                    <stop offset="0" stop-color="#d9f3e9" stop-opacity=".88"/>
+                    <stop offset=".45" stop-color="#a7d8c8" stop-opacity=".64"/>
+                    <stop offset="1" stop-color="#7eb6ae" stop-opacity=".82"/>
+                  </linearGradient>
+                  <filter id="softShadow" x="-30%" y="-30%" width="160%" height="170%">
+                    <feDropShadow dx="0" dy="8" stdDeviation="7" flood-color="#19324c" flood-opacity=".22"/>
+                  </filter>
+                </defs>
+                <path d="M38 20 Q22 60 25 237 Q25 307 84 316 H226 Q285 307 285 237 Q288 60 272 20 Z" fill="url(#jarGlass)" stroke="#274c77" stroke-width="9" filter="url(#softShadow)"/>
+                <path d="M54 55 Q47 117 49 231 Q50 273 79 288" fill="none" stroke="#fff" stroke-opacity=".58" stroke-width="14" stroke-linecap="round"/>
+                <path d="M258 70v160" fill="none" stroke="#5a8983" stroke-opacity=".45" stroke-width="6" stroke-linecap="round"/>
+                <ellipse cx="155" cy="307" rx="86" ry="8" fill="#5a8983" opacity=".35"/>
+              </svg>
+              <div class="jar-face">
+                <span class="jar-eye jar-eye--left"></span>
+                <span class="jar-eye jar-eye--right"></span>
+                <span class="jar-mouth-face"></span>
+              </div>
+              <div class="jar-label">
+                <small>PROTECTED</small>
+                <strong>COOKIES</strong>
+                <span>since 1952</span>
+              </div>
+              <p class="empty-note">ABSOLUTELY<br>EMPTY</p>
+            </div>
+          </div>
+
+          <div id="rewardPlate" class="reward-plate" aria-hidden="true">
+            <span class="reward-plate__rim"></span>
+            <span id="halfCookie" class="half-cookie">
+              <i class="chip chip--one"></i>
+              <i class="chip chip--two"></i>
+              <i class="chip chip--three"></i>
+            </span>
+            <span class="reward-label">Your half</span>
+          </div>
+
+          <div id="celebration" class="celebration" aria-hidden="true"></div>
+        </div>
+
+        <div class="game-footer">
+          <p id="gameInstructions" class="game-instructions">
+            <span class="pointer-icon" aria-hidden="true">↖</span>
+            Grab the cookie. Dragging counts when you let go. Keyboard: focus the cookie and press Enter or Space.
+          </p>
+          <p class="milestone-note"><strong>House rule:</strong> Persistence earns snacks.</p>
+        </div>
+      </section>
+
+      <section class="defense-file" aria-labelledby="defense-heading">
+        <div>
+          <p class="eyebrow">Pantry intelligence</p>
+          <h2 id="defense-heading">Known countermeasures</h2>
+        </div>
+        <ol id="defenseList" class="defense-list">
+          <li data-defense="lid"><span>01</span> Lid lockdown</li>
+          <li data-defense="pull"><span>02</span> Cookie recall</li>
+          <li data-defense="move"><span>03</span> Table shuffle</li>
+          <li data-defense="arms"><span>04</span> Tiny arms</li>
+          <li data-defense="broccoli"><span>05</span> Broccoli swap</li>
+          <li data-defense="under"><span>06</span> Under-jar hideout</li>
+          <li data-defense="warning"><span>07</span> Official warning</li>
+          <li data-defense="empty"><span>08</span> Empty-jar bluff</li>
+          <li data-defense="fakes"><span>09</span> Decoy batch</li>
+          <li data-defense="hand"><span>10</span> Pointer patrol</li>
+        </ol>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>CookieGuard · A no-crumbs-left-behind initiative.</p>
+      <p>Made with HTML, CSS, SVG, and stubborn vanilla JavaScript.</p>
+    </footer>
+
+    <div id="liveRegion" class="visually-hidden" aria-live="assertive" aria-atomic="true"></div>
+  </body>
+</html>
