@@ -89,6 +89,8 @@ check(parsedPackage.private === true, "Package is marked private to prevent acci
 check(!parsedPackage.dependencies && !parsedPackage.devDependencies, "Project has no runtime or development dependencies");
 check(parsedPackage.engines?.node === ">=18", "The supported Node.js version is declared");
 check(parsedPackage.repository?.url.includes("SUDARSHANCHAUDHARI/CookieGuard"), "Package metadata points to the canonical repository");
+check(parsedPackage.author?.name === "Sudarshan Chaudhari", "Package metadata identifies the author");
+check(parsedPackage.author?.url === "https://github.com/SUDARSHANCHAUDHARI", "Package metadata links the author's GitHub profile");
 
 const requiredIgnorePatterns = [
   "node_modules/",
@@ -107,6 +109,8 @@ for (const pattern of requiredIgnorePatterns) {
 
 check(/pnpm check/.test(readme), "README documents the production verification command");
 check(/Keep the GitHub repository private/.test(readme), "README documents the private-until-release policy");
+check(/## Author/.test(readme) && /Sudarshan Chaudhari/.test(readme), "README includes the author section");
+check(/SudarshanTechLabs/.test(readme) && /SUDARSHANCHAUDHARI/.test(readme), "README includes studio and GitHub author details");
 
 const externalRuntimeReferences = [...`${html}\n${css}\n${script}`.matchAll(/https?:\/\/[^\s"')]+/g)];
 check(externalRuntimeReferences.length === 0, "Runtime source contains no third-party network references");

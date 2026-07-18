@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "description": "An interactive cookie jar determined to protect its final cookie.",
-  "author": "SudarshanTechLabs",
+  "author": {
+    "name": "Sudarshan Chaudhari",
+    "email": "sunny.sudarshan@gmail.com",
+    "url": "https://github.com/SUDARSHANCHAUDHARI"
+  },
   "homepage": "https://sudarshanchaudhari.github.io/CookieGuard/",
   "repository": {
     "type": "git",
