@@ -81,6 +81,32 @@ check(!/\bfetch\s*\(|XMLHttpRequest|WebSocket/.test(script), "The game makes no 
 check(/this\.attempts\s*===\s*10/.test(script), "Attempt 10 triggers the half-cookie milestone");
 check(/this\.attempts\s*>=\s*15/.test(script), "Attempt 15 triggers the complete-cookie milestone");
 
+const sharedTokens = {
+  ink: "#15152a",
+  paper: "#fff5df",
+  coral: "#ff5d5d",
+  blue: "#4f7cff",
+  butter: "#ffd166",
+  mint: "#58d6a9",
+  lilac: "#b695ff",
+};
+for (const [token, value] of Object.entries(sharedTokens)) {
+  check(css.includes(`--${token}: ${value};`), `Exact TinyChaos token is present: ${token}`);
+}
+check(html.includes("CookieGuard by Sudarshan Chaudhari"), "CookieGuard author attribution is available");
+check(/a:focus-visible\s*\{[^}]*outline:\s*4px solid var\(--blue\)/s.test(css), "Links use TinyChaos blue focus");
+check(css.includes("--coral-text: #a83b44;"), "Contrast-safe coral text alias is exact");
+check(css.includes("--blue-text: #3159c9;"), "Contrast-safe blue text alias is exact");
+check(/\.intro h1 em\s*\{[^}]*color:\s*var\(--coral-text\)/s.test(css), "Headline uses contrast-safe coral text");
+check(/\.shift-badge\s*\{[^}]*color:\s*var\(--blue-text\)/s.test(css), "Shift badge uses contrast-safe blue text");
+check(
+  /\.mission-progress__labels\s*\{[^}]*color:\s*var\(--blue-text\)/s.test(css),
+  "Progress labels use contrast-safe blue text",
+);
+check(contrastRatio("#a83b44", "#fff5df") >= 3, "Large coral headline meets 3:1 contrast");
+check(contrastRatio("#3159c9", "#fff5df") >= 4.5, "Small blue labels meet 4.5:1 contrast");
+check(!/min-width:\s*320px/.test(css), "Page-level 320px minimum is absent");
+
 const defenseIds = ["lid", "pull", "move", "arms", "broccoli", "under", "warning", "empty", "fakes", "hand"];
 for (const defenseId of defenseIds) {
   check(new RegExp(`id:\\s*"${defenseId}"`).test(script), `Defense is implemented: ${defenseId}`);
@@ -124,3 +150,15 @@ const closingBraces = (cssWithoutComments.match(/\}/g) || []).length;
 check(openingBraces === closingBraces, "CSS block braces are balanced");
 
 console.log(`CookieGuard verification passed (${checks.length} checks).`);
+
+function contrastRatio(firstHex, secondHex) {
+  const values = [firstHex, secondHex].map(relativeLuminance).sort((a, b) => b - a);
+  return (values[0] + 0.05) / (values[1] + 0.05);
+}
+
+function relativeLuminance(hex) {
+  const channels = [1, 3, 5]
+    .map((index) => Number.parseInt(hex.slice(index, index + 2), 16) / 255)
+    .map((value) => (value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4));
+  return (0.2126 * channels[0]) + (0.7152 * channels[1]) + (0.0722 * channels[2]);
+}

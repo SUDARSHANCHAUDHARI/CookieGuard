@@ -12,10 +12,12 @@
   --butter: #ffd166;
   --mint: #58d6a9;
   --lilac: #b695ff;
-  --blue-deep: #3159c9;
+  --blue-text: #3159c9;
+  --coral-text: #a83b44;
+  --blue-deep: var(--blue-text);
   --cream: var(--butter);
   --red: var(--coral);
-  --red-dark: #a83b44;
+  --red-dark: var(--coral-text);
   --mint-dark: #2f8068;
   --cookie: #d9943d;
   --cookie-light: #f1b85f;
@@ -137,7 +139,7 @@ main,
   gap: 9px;
   align-items: center;
   margin: 0;
-  color: var(--blue);
+  color: var(--blue-text);
   font-family: var(--utility);
   font-size: 0.72rem;
   font-weight: 800;
@@ -180,7 +182,7 @@ main,
 }
 
 .intro h1 em {
-  color: var(--red);
+  color: var(--coral-text);
   font-style: normal;
   text-decoration: underline;
   text-decoration-color: var(--cookie-light);
@@ -261,7 +263,7 @@ kbd {
   display: flex;
   justify-content: space-between;
   margin-bottom: 9px;
-  color: var(--blue);
+  color: var(--blue-text);
   font-family: var(--utility);
   font-size: 0.62rem;
   font-weight: 900;
