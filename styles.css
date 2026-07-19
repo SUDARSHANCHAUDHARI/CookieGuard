@@ -5,27 +5,30 @@
 
 :root {
   color-scheme: light;
-  --ink: #17324d;
-  --blue: #274c77;
-  --blue-deep: #19324c;
-  --cream: #fff4c7;
-  --paper: #fffaf0;
-  --red: #e84855;
-  --red-dark: #b82f3c;
-  --mint: #a7d8c8;
-  --mint-dark: #5a8983;
+  --ink: #15152a;
+  --paper: #fff5df;
+  --coral: #ff5d5d;
+  --blue: #4f7cff;
+  --butter: #ffd166;
+  --mint: #58d6a9;
+  --lilac: #b695ff;
+  --blue-deep: #3159c9;
+  --cream: var(--butter);
+  --red: var(--coral);
+  --red-dark: #a83b44;
+  --mint-dark: #2f8068;
   --cookie: #d9943d;
   --cookie-light: #f1b85f;
   --chocolate: #5a3525;
-  --green: #477a50;
+  --green: #2f7656;
   --table: #d68a5f;
   --table-dark: #a95e40;
-  --white: #fff;
-  --shadow: 0 18px 50px rgb(25 50 76 / 18%);
+  --white: #fffdf7;
+  --shadow: 0 18px 50px rgb(21 21 42 / 18%);
   --line: 3px solid var(--ink);
   --radius: 20px;
-  --display: "Arial Rounded MT Bold", "Trebuchet MS", system-ui, sans-serif;
-  --body: "Avenir Next", Avenir, "Segoe UI", system-ui, sans-serif;
+  --display: Impact, Haettenschweiler, "Arial Narrow Bold", "Franklin Gothic Condensed", sans-serif;
+  --body: Inter, ui-rounded, "SF Pro Rounded", "Segoe UI", sans-serif;
   --utility: ui-monospace, "SFMono-Regular", Consolas, monospace;
 }
 
@@ -40,11 +43,12 @@ html {
 }
 
 body {
-  min-width: 320px;
+  min-width: 0;
   margin: 0;
+  overflow-x: clip;
   color: var(--ink);
   background:
-    radial-gradient(circle at 8% 10%, rgb(167 216 200 / 40%) 0 7rem, transparent 7.1rem),
+    radial-gradient(circle at 8% 10%, rgb(88 214 169 / 28%) 0 7rem, transparent 7.1rem),
     var(--paper);
   font-family: var(--body);
   line-height: 1.5;
@@ -62,8 +66,8 @@ button {
 
 button:focus-visible,
 a:focus-visible {
-  outline: 4px solid var(--cream);
-  box-shadow: 0 0 0 7px var(--blue-deep);
+  outline: 4px solid var(--blue);
+  outline-offset: 4px;
 }
 
 .skip-link {
@@ -309,9 +313,9 @@ kbd {
   padding: 9px 13px;
   color: var(--ink);
   background: var(--white);
-  border: 2px solid var(--ink);
+  border: var(--line);
   border-radius: 100px;
-  box-shadow: 0 3px 0 var(--ink);
+  box-shadow: 0 4px 0 var(--ink);
   font-size: 0.78rem;
   font-weight: 900;
   cursor: pointer;
@@ -1462,6 +1466,12 @@ kbd {
 
 .site-footer p {
   margin: 0;
+}
+
+.site-footer a {
+  color: var(--ink);
+  font-weight: 900;
+  text-underline-offset: 0.2em;
 }
 
 @keyframes signalPulse {

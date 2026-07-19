@@ -47,9 +47,12 @@ const [html, css, script, packageJson, gitignore, readme] = await Promise.all([
   readFile(resolve(projectRoot, "README.md"), "utf8"),
 ]);
 
+const galleryHref = "../TinyChaos/";
+check(html.includes(`href="${galleryHref}"`), "TinyChaos gallery navigation is available");
+
 const localReferences = [...html.matchAll(/(?:href|src)="([^"#]+)"/g)]
   .map((match) => match[1])
-  .filter((reference) => !/^(?:https?:|data:|mailto:|tel:)/.test(reference));
+  .filter((reference) => reference !== galleryHref && !/^(?:https?:|data:|mailto:|tel:)/.test(reference));
 
 for (const reference of localReferences) {
   await access(resolve(projectRoot, reference));
